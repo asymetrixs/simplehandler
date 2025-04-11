@@ -9,21 +9,27 @@ public abstract class AbstractHandler<TIn, TOut, TPayload>(ILogger<AbstractHandl
 {
     public async Task<TOut> Handle(TIn request)
     {
+        logger.LogTrace("Authenticating");
         var response = await Authenticate(request);
-
         if (response.IsError)
         {
+            logger.LogTrace("Authenticating failed");
             return response;
         }
 
+        logger.LogTrace("Validating");
         response = await Validate(request);
-
         if (response.IsError)
         {
+            logger.LogTrace("Validating failed");
             return response;
         }
 
-        return await Process(request);
+        logger.LogTrace("Processing");
+        response = await Process(request);
+        logger.LogTrace(response.IsError ? "Processing failed" : "Processing succeeded");
+
+        return response;
     }
 
     protected abstract Task<TOut> Authenticate(in TIn request);
