@@ -16,6 +16,7 @@ public class RealHandler(ILogger<RealHandler> logger)
         return Task.FromResult(ResponseModel<RealResponse>.Failure());
     }
 
+
     protected override Task<ResponseModel<RealResponse>> Validate(in RealRequest request)
     {
         if (request.Something == "abc")
@@ -29,6 +30,7 @@ public class RealHandler(ILogger<RealHandler> logger)
 
         return Task.FromResult(response);
     }
+
 
     protected override Task<ResponseModel<RealResponse>> Process(in RealRequest request)
     {

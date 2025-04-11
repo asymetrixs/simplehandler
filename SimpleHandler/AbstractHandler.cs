@@ -26,21 +26,9 @@ public abstract class AbstractHandler<TIn, TOut, TPayload>(ILogger<AbstractHandl
         return await Process(request);
     }
 
-    protected virtual Task<TOut> Authenticate(in TIn request)
-    {
-        logger.LogWarning("Authenticate not implemented");
-        return Task.FromResult(Activator.CreateInstance<TOut>());
-    }
+    protected abstract Task<TOut> Authenticate(in TIn request);
 
-    protected virtual Task<TOut> Validate(in TIn request)
-    {
-        logger.LogWarning("Validate not implemented");
-        return Task.FromResult(Activator.CreateInstance<TOut>());
-    }
+    protected abstract Task<TOut> Validate(in TIn request);
 
-    protected virtual Task<TOut> Process(in TIn request)
-    {
-        logger.LogWarning("Process not implemented");
-        return Task.FromResult(Activator.CreateInstance<TOut>());
-    }
+    protected abstract Task<TOut> Process(in TIn request);
 }
