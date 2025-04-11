@@ -31,10 +31,7 @@ public static class Program
 
         // Find all handlers
         var handlers = assemblies.SelectMany(s => s.GetTypes())
-            .Where(t => t.IsClass
-                        && !t.IsAbstract
-                        && t.BaseType != null
-                        && t.BaseType.IsGenericType
+            .Where(t => t is { IsClass: true, IsAbstract: false, BaseType.IsGenericType: true }
                         && t.BaseType.GetGenericTypeDefinition() == typeof(AbstractHandler<,,>));
 
         foreach (var handler in handlers)
